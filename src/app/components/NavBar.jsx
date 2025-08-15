@@ -53,7 +53,7 @@ const NavBar = () => {
 
     const closeMenu = () => setIsOpen(false);
 
-    const navLinks = [{ name: "Home", to: "/" }, { name: "All Products", to: "/all-products" }, { name: "Add product", to: "/add-product" }, { name: "My Products", to: "/my-products" }, { name: "Contact Us", to: "/" }];
+    const navLinks = [{ name: "Home", to: "/" }, { name: "All Products", to: "/all-products" }, { name: "Add product", to: "/add-product" }, { name: "My Products", to: "/my-products" }, { name: "Carts", to: "/my-carts" }];
 
     return (
         <>
@@ -62,17 +62,21 @@ const NavBar = () => {
                     <div className="flex justify-between items-center h-16">
                         {/* Logo */}
                         <div className="flex-shrink-0">
-                            <span className="text-xl font-bold text-gray-800">TechTrade</span>
+                            <div className='flex items-center gap-2'>
+                                <img src="/main-icon.png" alt="logo" className='w-12' />
+                                <span className="text-xl lg:tex-2xl font-bold text-gray-800">TechTrade</span>
+                            </div>
+
                         </div>
 
                         {/* Desktop Navigation */}
-                        <div className="hidden md:flex md:items-center md:justify-center md:flex-1">
+                        <div className="hidden lg:flex lg:items-center lg:justify-center lg:flex-1">
                             <ul className="flex space-x-8">
                                 {navLinks.map((item) => (
                                     <li key={item.name}>
                                         <Link
                                             href={item.to}
-                                            className="text-gray-800 hover:text-blue-600 px-3 py-2 text-sm font-medium"
+                                            className="text-gray-900 hover:text-gray-600 hover:bg-gray-100 px-3 py-2 text-sm font-medium"
                                         >
                                             {item.name}
                                         </Link>
@@ -82,7 +86,7 @@ const NavBar = () => {
                         </div>
 
                         {/* Login Button - Desktop */}
-                        <div className="hidden md:block">
+                        <div className="hidden lg:block">
 
                             {
                                 status == 'authenticated' ?
@@ -96,7 +100,7 @@ const NavBar = () => {
                                     </div>) :
                                     (<>
 
-                                        <Link href={"/sign-up"} className="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm font-medium">
+                                        <Link href={"/sign-up"} className="bg-gray-800 cursor-pointer text-white px-4 py-2 rounded-md hover:bg-gray-700 text-sm font-medium">
                                             Sign Up
                                         </Link></>)
                             }
@@ -104,7 +108,7 @@ const NavBar = () => {
                         </div>
 
                         {/* Mobile Toggle Button */}
-                        <div className="md:hidden flex gap-2 items-center">
+                        <div className="lg:hidden flex gap-2 items-center">
                             {status === 'authenticated' ? (
                                 <img
                                     src={userData?.user?.image}
@@ -112,13 +116,13 @@ const NavBar = () => {
                                     className="w-10 h-10 rounded-full object-cover"
                                 />
                             ) : (
-                                <Link href={"/sign-up"} className="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm font-medium">
+                                <Link href={"/sign-up"} className="bg-gray-800 cursor-pointer text-white px-4 py-2 rounded-md hover:bg-gray-700 text-sm font-medium">
                                     Sign Up
                                 </Link>
                             )}
                             <button
                                 onClick={() => setIsOpen(!isOpen)}
-                                className="text-gray-800 hover:text-blue-600 focus:outline-none"
+                                className="text-gray-800 hover:text-gray-600 focus:outline-none"
                                 aria-label="Toggle menu"
                                 aria-expanded={isOpen}
                                 aria-controls="mobile-menu"
@@ -133,7 +137,7 @@ const NavBar = () => {
                 <div
                     ref={menuRef}
                     id="mobile-menu"
-                    className={`md:hidden bg-white shadow-lg fixed top-16 right-0 w-56 h-[calc(100vh-4rem)] transition-transform duration-300 ease-in-out transform ${isOpen ? 'translate-x-0' : 'translate-x-full'
+                    className={`lg:hidden bg-white shadow-lg fixed top-16 right-0 w-56 h-[calc(100vh-4rem)] transition-transform duration-300 ease-in-out transform ${isOpen ? 'translate-x-0' : 'translate-x-full'
                         } z-50 overflow-y-auto`}
                 >
                     <div className="p-4 space-y-2 flex flex-col items-end text-right">
@@ -142,7 +146,7 @@ const NavBar = () => {
                                 key={item.name}
                                 href={item.to}
                                 onClick={closeMenu}
-                                className="text-gray-800 hover:bg-gray-100 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 w-full"
+                                className="text-gray-800 hover:bg-gray-100 hover:font-bold block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 w-full"
                             >
                                 {item.name}
                             </Link>

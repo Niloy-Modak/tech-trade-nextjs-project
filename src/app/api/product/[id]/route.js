@@ -4,8 +4,9 @@ import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
+export const DELETE = async (req, context) => {
+  const { id } = await context.params; // Await the object before using .id
 
-export const DELETE = async (req, { params }) => {
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.email) {
@@ -16,10 +17,9 @@ export const DELETE = async (req, { params }) => {
   }
 
   const productCollection = dbConnect(collectionNameObj.productCollection);
-  const productId = params.id;
 
   // Fetch the product document
-  const product = await productCollection.findOne({ _id: new ObjectId(productId) });
+  const product = await productCollection.findOne({ _id: new ObjectId(id) });
 
   if (!product) {
     return NextResponse.json(
@@ -37,9 +37,14 @@ export const DELETE = async (req, { params }) => {
   }
 
   // Delete product
-  const deleteResponse = await productCollection.deleteOne({ _id: new ObjectId(productId) });
+  const deleteResponse = await productCollection.deleteOne({
+    _id: new ObjectId(id),
+  });
 
-  return NextResponse.json({ success: true, deletedCount: deleteResponse.deletedCount });
+  return NextResponse.json({
+    success: true,
+    deletedCount: deleteResponse.deletedCount,
+  });
 };
 
 export const GET = async (req, { params }) => {

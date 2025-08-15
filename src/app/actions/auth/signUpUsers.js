@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 
 export const signUpUsers = async (payload) => {
-  console.log(payload);
+  // console.log(payload);
   const userCollection = dbConnect(collectionNameObj.userCollection);
   const { password } = payload;
 

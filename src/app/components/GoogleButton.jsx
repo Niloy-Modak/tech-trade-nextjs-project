@@ -26,7 +26,7 @@ const GoogleButton = () => {
 
     const handleLogin = (providerName) => {
         signIn(providerName)
-        console.log("SOCIAL LOGIN", providerName);
+        // console.log("SOCIAL LOGIN", providerName);
 
     }
     return (

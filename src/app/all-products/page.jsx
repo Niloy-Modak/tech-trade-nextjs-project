@@ -1,10 +1,26 @@
 import React from 'react';
+import ProductCard from './components/ProductCard';
+import dbConnect, { collectionNameObj } from '@/lib/dbConnect';
 
-const AllProducts = () => {
+const AllProducts = async () => {
+    const allProductsCollection = dbConnect(collectionNameObj.productCollection)
+    const allData = await allProductsCollection.find({}).toArray()
+
+    // console.log("all data :", allData);
     return (
-        <div className='py-32'>
-            All products
-        </div>
+        <section className='py-14 '>
+
+            <h1 className='font-black text-2xl md:text-3xl lg:text-4xl text-center py-8'>
+                All products
+            </h1>
+
+            <section className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center'>
+                {
+                    allData.map(product => <ProductCard key={product._id} product={product} />)
+                }
+            </section>
+
+        </section>
     );
 };
 
