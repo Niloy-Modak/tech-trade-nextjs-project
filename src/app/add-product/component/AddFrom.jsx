@@ -35,7 +35,7 @@ const AddFrom = () => {
         // console.log(formData);
 
 
-        const res = await fetch("http://localhost:3000/api/product", {
+        const res = await fetch("https://tech-trade-psi.vercel.app/api/product", {
             method: "POST",
             body: JSON.stringify(formData)
         })

@@ -13,7 +13,7 @@ const ProductTable = () => {
 
     useEffect(() => {
         const fetchMyProducts = async () => {
-            const res = await fetch("http://localhost:3000/api/product");
+            const res = await fetch("https://tech-trade-psi.vercel.app/api/product");
             const d = await res.json();
             setData(d);
         };
@@ -31,7 +31,7 @@ const ProductTable = () => {
 
         if (result.isConfirmed) {
             try {
-                const res = await fetch(`http://localhost:3000/api/product/${id}`, {
+                const res = await fetch(`https://tech-trade-psi.vercel.app/api/product/${id}`, {
                     method: 'DELETE',
                 });
                 const data = await res.json();

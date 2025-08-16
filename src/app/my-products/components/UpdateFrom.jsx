@@ -12,7 +12,7 @@ const UpdateFrom = ({ closeModal, product: pID }) => {
         if (!pID) return;
         const fetchProduct = async () => {
             try {
-                const res = await fetch(`http://localhost:3000/api/my-product/${pID}`); // Your API endpoint
+                const res = await fetch(`https://tech-trade-psi.vercel.app/api/my-product/${pID}`); // Your API endpoint
                 if (!res.ok) throw new Error("Failed to fetch product");
                 const data = await res.json();
                 setProductData(data);
@@ -51,7 +51,7 @@ const UpdateFrom = ({ closeModal, product: pID }) => {
         // console.log(formData);
 
         try {
-            const res = await fetch(`http://localhost:3000/api/my-product/${pID}`, {
+            const res = await fetch(`https://tech-trade-psi.vercel.app/api/my-product/${pID}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json", // important

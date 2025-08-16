@@ -1,12 +1,34 @@
 import React from 'react';
-import { FaCheckCircle } from "react-icons/fa";
 import AddCartButton from '../components/AddCartButton';
+
+export async function generateMetadata({params}) {
+    const { id } = await params;
+
+    const res = await fetch(`https://tech-trade-psi.vercel.app/api/product/${id}`, {
+        next:{
+            revalidate: 10
+        }
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch product details");
+    }
+
+    const singleProduct = await res.json();
+
+    return{
+        title: singleProduct.product_name,
+        description: singleProduct.shortDescription
+    }
+}
 
 const ProductDetailPage = async ({ params }) => {
     const { id } = await params;
 
-    const res = await fetch(`http://localhost:3000/api/product/${id}`, {
-        cache: "no-store", // ensure fresh data
+    const res = await fetch(`https://tech-trade-psi.vercel.app/api/product/${id}`, {
+        next:{
+            revalidate: 10
+        }
     });
 
     if (!res.ok) {
@@ -24,7 +46,7 @@ const ProductDetailPage = async ({ params }) => {
                 <div className="flex justify-center items-center">
                     <img
                         src={singleProduct.imageUrl}
-                        alt="HP Laptop"
+                        alt={singleProduct.product_name}
                         className="rounded-lg shadow-lg max-h-[400px] object-contain"
                     />
                 </div>

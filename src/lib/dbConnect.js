@@ -7,7 +7,7 @@ export const collectionNameObj = {
 };
 
 export default function dbConnect(collectionName) {
-  const uri = process.env.DB_URI;
+  const uri = process.env.NEXT_PUBLIC_DB_URI;
 
   if (!uri) {
     throw new Error("DB_URI is not set in environment variables");

@@ -7,9 +7,11 @@ import Swal from 'sweetalert2';
 const CartTable = () => {
     const [data, setData] = useState([]);
 
+    console.log(data);
+
     useEffect(() => {
         const fetchMyProducts = async () => {
-            const res = await fetch("http://localhost:3000/api/cart");
+            const res = await fetch("https://tech-trade-psi.vercel.app/api/cart");
             const d = await res.json();
             setData(d);
         };
@@ -27,7 +29,7 @@ const CartTable = () => {
 
         if (result.isConfirmed) {
             try {
-                const res = await fetch(`http://localhost:3000/api/cart/${id}`, {
+                const res = await fetch(`https://tech-trade-psi.vercel.app/api/cart/${id}`, {
                     method: 'DELETE',
                 });
                 const data = await res.json();
