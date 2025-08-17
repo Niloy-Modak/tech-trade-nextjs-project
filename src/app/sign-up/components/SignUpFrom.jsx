@@ -3,14 +3,10 @@ import { signUpUsers } from '@/app/actions/auth/signUpUsers';
 import GoogleButton from '@/app/components/GoogleButton';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 import Swal from 'sweetalert2';
 
-
 const SignUpFrom = () => {
-    const router = useRouter()
-
     const handleSignUp = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -21,8 +17,8 @@ const SignUpFrom = () => {
 
         Swal.fire({
             title: "Submitting...",
+            didOpen: () => Swal.showLoading(),
             showConfirmButton: false,
-            timer: 1500,
         });
 
         try {
@@ -34,31 +30,17 @@ const SignUpFrom = () => {
                     title: "Sign Up Failed",
                     text: result.error || "Something went wrong.",
                 });
-            } else {
-                // Auto sign in the user after signup
-                const signInResult = await signIn("credentials", {
-                    redirect: false, // false so you can control navigation
-                    email,
-                    password,
-                });
-
-                if (signInResult?.error) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Login Failed",
-                        text: signInResult.error,
-                    });
-                } else {
-                    Swal.fire({
-                        icon: "success",
-                        title: "Account Created & Logged In!",
-                        showConfirmButton: false,
-                        timer: 1500,
-                    }).then(() => {
-                        router.push('/'); // or dashboard
-                    });
-                }
+                return;
             }
+
+            // Auto sign in and redirect to home
+            await signIn("credentials", {
+                email,
+                password,
+                redirect: true,       // let NextAuth handle redirect
+                callbackUrl: "/",     // redirect after login
+            });
+
         } catch (err) {
             Swal.fire({
                 icon: "error",
@@ -69,30 +51,60 @@ const SignUpFrom = () => {
     };
 
     return (
-        <div className="hero  min-h-[calc(100vh-334px)] py-8 lg:py-12 px-4">
+        <div className="hero min-h-[calc(100vh-334px)] py-8 lg:py-12 px-4">
             <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                <h1 className='text-center pt-6 text-2xl font-bold'>Sign UP</h1>
+                <h1 className='text-center pt-6 text-2xl font-bold'>Sign Up</h1>
                 <div className="card-body">
                     <form onSubmit={handleSignUp} className="fieldset">
-                        <label className="label" >Name</label>
-                        <input type="text" name="name" className="input focus:outline-0 " placeholder="Type Your Name" required />
 
-                        <label className="label ">Image</label>
-                        <input type="text" name='image' className="input focus:outline-0 " placeholder="Photo URL" required />
+                        <label className="label">Name</label>
+                        <input 
+                            type="text" 
+                            name="name" 
+                            className="input focus:outline-0" 
+                            placeholder="Type Your Name" 
+                            required 
+                        />
+
+                        <label className="label">Image</label>
+                        <input 
+                            type="text" 
+                            name='image' 
+                            className="input focus:outline-0" 
+                            placeholder="Photo URL" 
+                            required 
+                        />
 
                         <label className="label">Email</label>
-                        <input type="email" name="email" className="input focus:outline-0 " placeholder="Email" required />
+                        <input 
+                            type="email" 
+                            name="email" 
+                            className="input focus:outline-0" 
+                            placeholder="Email" 
+                            required 
+                        />
 
                         <label className="label">Password</label>
-                        <input type="password" name="password" className="input focus:outline-0 " placeholder="Password" required />
+                        <input 
+                            type="password" 
+                            name="password" 
+                            className="input focus:outline-0" 
+                            placeholder="Password" 
+                            required 
+                        />
 
-                        <p>If you have an account all ready? <Link href={"/sign-in"}><span className='font-bold text-primary'>Sign-in</span></Link> </p>
+                        <p className='pt-2'>
+                            Already have an account?{" "}
+                            <Link href={"/sign-in"}>
+                                <span className='font-bold text-primary'>Sign in</span>
+                            </Link>.
+                        </p>
 
-                        <button className="btn btn-neutral mt-4">Login</button>
+                        <button className="btn btn-neutral mt-4">Sign Up</button>
                     </form>
-                    
+
                     <p className='py-2 text-center'>--- or ---</p>
-                        <GoogleButton />
+                    <GoogleButton />
                 </div>
             </div>
         </div>

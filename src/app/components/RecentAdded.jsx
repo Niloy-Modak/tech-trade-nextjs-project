@@ -2,8 +2,10 @@ import dbConnect, { collectionNameObj } from '@/lib/dbConnect';
 import Link from 'next/link';
 import React from 'react';
 
+export const revalidate = 10;
+
 const RecentAdded = async () => {
-    const allProductsCollection = dbConnect(collectionNameObj.productCollection);
+    const allProductsCollection = await dbConnect(collectionNameObj.productCollection);
 
     // Fetch the latest 4 products
     const recentProducts = await allProductsCollection
@@ -12,16 +14,22 @@ const RecentAdded = async () => {
         .limit(4)
         .toArray();
 
+    // Convert ObjectId for Next.js
+    const products = recentProducts.map(product => ({
+        ...product,
+        _id: product._id.toString(),
+    }));
+
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {recentProducts.map((product) => (
+            {products.map((product) => (
                 <div key={product._id} className="w-full max-w-sm mx-auto bg-gray-100 shadow-md rounded-lg overflow-hidden flex flex-col ">
 
                     {/* Image */}
                     <div className="h-[240px] w-full p-2">
                         <img
-                            src={product.imageUrl}
-                            alt={"image"}
+                            src={product.imageUrl || "/placeholder.png"}
+                            alt="image"
                             className="w-full h-full object-cover shadow-2xs rounded-lg"
                         />
                     </div>
@@ -34,7 +42,9 @@ const RecentAdded = async () => {
                             </h2>
 
                             <div className="flex flex-wrap justify-center gap-1 text-base font-medium">
-                                <p className="text-gray-700">Category: <span className='text-black'>{product.category}</span></p>
+                                <p className="text-gray-700">
+                                    Category: <span className="text-black">{product.category}</span>
+                                </p>
                             </div>
 
                             <div className="flex items-center justify-center gap-2 text-gray-600">
