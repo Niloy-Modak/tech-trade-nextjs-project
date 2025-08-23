@@ -8,7 +8,7 @@ export const metadata = {
 
 const SignUpPage = () => {
     return (
-        <div className=' pt-18'>
+        <div className=''>
             
             <SignUpFrom/>
         </div>

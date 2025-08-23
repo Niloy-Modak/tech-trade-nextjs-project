@@ -1,17 +1,21 @@
-import dbConnect, { collectionNameObj } from '@/lib/dbConnect';
 import ProductCard from './components/ProductCard';
 
-export const revalidate = 10;
-
 const AllProducts = async () => {
-  const allProductsCollection = await dbConnect(collectionNameObj.productCollection);
+  // Fetch all products from your API
+  const res = await fetch('https://tech-trade-psi.vercel.app/api/products', {
+  next: { revalidate: 10 },
+});
 
-  const allData = await allProductsCollection.find({}).toArray();
+if (!res.ok) throw new Error('Failed to fetch products');
 
-  const products = allData.map(product => ({
-    ...product,
-    _id: product._id.toString(),
-  }));
+const productsArray = await res.json();
+
+// If your API returns an array directly:
+const products = productsArray.map(product => ({
+  ...product,
+  _id: product._id.toString(),
+}));
+
 
   return (
     <section className="py-14">

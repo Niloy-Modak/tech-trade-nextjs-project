@@ -8,7 +8,7 @@ export const metadata = {
 
 const SignInPage = () => {
     return (
-        <div className='py-32'>
+        <div className=''>
             <SignInFrom/>
         </div>
     );

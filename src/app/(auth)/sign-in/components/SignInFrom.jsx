@@ -4,7 +4,7 @@ import React from 'react';
 import { signIn } from "next-auth/react";
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
-import GoogleButton from '@/app/components/GoogleButton';
+import GoogleButton from '@/app/(auth)/components/GoogleButton';
 
 const SignInFrom = () => {
     const router = useRouter();
@@ -45,7 +45,7 @@ const SignInFrom = () => {
                     showConfirmButton: false,
                     timer: 1500,
                 }).then(() => {
-                    router.push('/'); // go to home
+                    router.push('/all-products'); // go to home
                     router.refresh(); // refresh UI/server components
                 });
             }, 300); // small delay

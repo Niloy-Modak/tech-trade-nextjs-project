@@ -1,35 +1,32 @@
-import dbConnect, { collectionNameObj } from '@/lib/dbConnect';
 import Link from 'next/link';
 import React from 'react';
 
-export const revalidate = 10;
 
 const RecentAdded = async () => {
-    const allProductsCollection = await dbConnect(collectionNameObj.productCollection);
+    // Fetch recent products from the API
+    const res = await fetch('https://tech-trade-psi.vercel.app/api/recent-added', {
+        next: { revalidate: 10 },
+    });
 
-    // Fetch the latest 4 products
-    const recentProducts = await allProductsCollection
-        .find({})
-        .sort({ _id: -1 }) // newest first
-        .limit(4)
-        .toArray();
+    if (!res.ok) {
+        throw new Error('Failed to fetch recent products');
+    }
 
-    // Convert ObjectId for Next.js
-    const products = recentProducts.map(product => ({
+    const data = await res.json();
+    const products = data.data.map(product => ({
         ...product,
-        _id: product._id.toString(),
+        _id: product._id.toString(), // convert ObjectId to string if needed
     }));
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((product) => (
-                <div key={product._id} className="w-full max-w-sm mx-auto bg-gray-100 shadow-md rounded-lg overflow-hidden flex flex-col ">
-
+                <div key={product._id} className="w-full max-w-sm mx-auto bg-gray-100 shadow-md rounded-lg overflow-hidden flex flex-col">
                     {/* Image */}
                     <div className="h-[240px] w-full p-2">
                         <img
                             src={product.imageUrl || "/placeholder.png"}
-                            alt="image"
+                            alt={product.product_name}
                             className="w-full h-full object-cover shadow-2xs rounded-lg"
                         />
                     </div>

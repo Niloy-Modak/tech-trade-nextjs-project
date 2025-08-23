@@ -12,5 +12,5 @@ export const middleware = async (req) => {
 };
 
 export const config = {
-  matcher: ["/my-products", "/add-product", "/my-carts"], // no trailing comma
+  matcher: ["/My-Dashboard", "/dashboard-my-cart", "/dashboard-my-products", "/dashboard-add-products"], // no trailing comma
 };

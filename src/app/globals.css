@@ -4,3 +4,11 @@
    themes: light --default;
  }
 
+ @plugin "daisyui/theme" {
+  name: "mytheme";
+  default: true; /* set as default */
+
+  --color-primary: #1F2937;
+
+
+}

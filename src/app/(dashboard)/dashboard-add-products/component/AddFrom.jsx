@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
-const AddFrom = () => {
+const DashboardAddFrom = () => {
     const { data: session } = useSession()
 
     const [condition, setCondition] = useState("Brand New");
@@ -64,7 +64,7 @@ const AddFrom = () => {
     };
 
     return (
-        <div>
+        <div className='px-4 md:px-6'>
             <form
                 onSubmit={handleSubmit}
                 className="max-w-3xl mx-auto p-6 space-y-6 bg-white border border-gray-200 rounded-xl shadow-md"
@@ -209,4 +209,4 @@ const AddFrom = () => {
     );
 };
 
-export default AddFrom;
+export default DashboardAddFrom;

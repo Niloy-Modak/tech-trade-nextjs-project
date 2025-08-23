@@ -1,6 +1,6 @@
 'use client'
 import { signUpUsers } from '@/app/actions/auth/signUpUsers';
-import GoogleButton from '@/app/components/GoogleButton';
+import GoogleButton from '@/app/(auth)/components/GoogleButton';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import React from 'react';

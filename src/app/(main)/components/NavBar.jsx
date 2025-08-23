@@ -53,7 +53,10 @@ const NavBar = () => {
 
     const closeMenu = () => setIsOpen(false);
 
-    const navLinks = [{ name: "Home", to: "/" }, { name: "All Products", to: "/all-products" }, { name: "Add product", to: "/add-product" }, { name: "My Products", to: "/my-products" }, { name: "Carts", to: "/my-carts" }];
+    const navLinks = [
+        { name: "Home", to: "/" },
+        { name: "All Products", to: "/all-products" },
+        { name: "Dashboard", to: "/My-Dashboard" }];
 
     return (
         <>
@@ -100,8 +103,8 @@ const NavBar = () => {
                                     </div>) :
                                     (<>
 
-                                        <Link href={"/sign-up"} className="bg-gray-800 cursor-pointer text-white px-4 py-2 rounded-md hover:bg-gray-700 text-sm font-medium">
-                                            Sign Up
+                                        <Link href={"/sign-in"} className="bg-gray-800 cursor-pointer text-white px-4 py-2 rounded-md hover:bg-gray-700 text-sm font-medium">
+                                            Sign In
                                         </Link></>)
                             }
 
@@ -116,8 +119,8 @@ const NavBar = () => {
                                     className="w-10 h-10 rounded-full object-cover"
                                 />
                             ) : (
-                                <Link href={"/sign-up"} className="bg-gray-800 cursor-pointer text-white px-4 py-2 rounded-md hover:bg-gray-700 text-sm font-medium">
-                                    Sign Up
+                                <Link href={"/sign-in"} className="bg-gray-800 cursor-pointer text-white px-4 py-2 rounded-md hover:bg-gray-700 text-sm font-medium">
+                                    Sign In
                                 </Link>
                             )}
                             <button
