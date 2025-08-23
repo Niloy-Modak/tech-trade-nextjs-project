@@ -16,5 +16,5 @@ Tech Trade is a web application where users can manage products with full **CRUD
 
 1. **Clone the repository**
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/Niloy-Modak/tech-trade-nextjs-project.git
    cd tech-trade
